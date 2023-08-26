@@ -1,0 +1,16 @@
+var mongoose = require('mongoose');
+
+var esquema = new mongoose.Schema({
+    nombreUsuario: String ,
+    correo: String,
+    contraseña: String,
+    nombre: mongoose.SchemaTypes.Mixed,
+    biografia: String,
+    foto: String,
+    profesion: String,
+    industria: String,
+    situacion_laboral: String,
+    enlace_empresa: String
+});
+
+module.exports = mongoose.model('usuarios',esquema)
