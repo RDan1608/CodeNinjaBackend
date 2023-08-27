@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
       const usuarioEncontrado = await Usuario.findOne({ nombreUsuario, contraseña });
   
       if (!usuarioEncontrado) {
-        return res.status(404).json({ Codigo:0, mensaje: 'Credenciales inválidas' });
+        return res.status(200).json({ Codigo:0, mensaje: 'Credenciales inválidas' });
       }
   
       res.status(200).json({
@@ -22,7 +22,6 @@ router.post('/', async (req, res) => {
           userId: usuarioEncontrado._id, // Assuming user has _id property
           nombre: usuarioEncontrado.nombre, // Example user data fields
           email: usuarioEncontrado.email
-          // Include other user data fields as needed
         }
       });
     } catch (error) {

@@ -10,7 +10,8 @@ router.post('/', function(req, res) {
       {
         nombre: req.body.nombre,
         descripcion: req.body.descripcion,
-        contenido: req.body.contenido
+        contenido: req.body.contenido,
+        proyectoid: req.body.proyectoid,
       }
   );
     u.save().then(result=>{

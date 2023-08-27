@@ -4,6 +4,7 @@ var archivosSchema = new mongoose.Schema({
     nombre: String,
     formato: String,
     contenido: String,
+    proyectoid: String,
 
 });
 

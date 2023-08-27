@@ -18,7 +18,9 @@ router.post('/', function(req, res) {
       profesion: null,
       industria: null,
       situacion_laboral: null,
-      enlace_empresa: null
+      enlace_empresa: null,
+      planId:"64e978223423fdf95e1cc4d7",
+      contadorProyectos:0
     }
 );
   u.save().then(result=>{
@@ -73,7 +75,9 @@ router.put('/:id', async function(req, res) {
       profesion: req.body.profesion,
       industria: req.body.industria,
       situacion_laboral: req.body.situacion_laboral,
-      enlace_empresa: req.body.enlace_empresa
+      enlace_empresa: req.body.enlace_empresa,
+      planId: req.body.planId,
+      contadorProyectos:req.body.contadorProyectos,
     };
 
     const result = await usuario.updateOne({ _id: req.params.id }, updatedData);

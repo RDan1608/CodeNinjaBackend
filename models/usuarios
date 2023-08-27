@@ -10,7 +10,9 @@ var esquema = new mongoose.Schema({
     profesion: String,
     industria: String,
     situacion_laboral: String,
-    enlace_empresa: String
+    enlace_empresa: String,
+    planId: mongoose.Schema.Types.ObjectId,
+    contadorProyectos: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('usuarios',esquema)

@@ -74,7 +74,7 @@ router.delete('/:idCarpeta', async (req, res) => {
   
       // Verifica si el usuario existe
       const Existecarpeta = await carpeta.findById(idCarpeta);
-      if (!Existeucarpeta) {
+      if (!Existecarpeta) {
         return res.status(404).json({ mensaje: 'carpeta no encontrada' });
       }
   

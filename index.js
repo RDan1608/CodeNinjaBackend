@@ -8,6 +8,7 @@ var loginRouter = require('./routes/login-router');
 var carpetaRouter = require('./routes/carpetas-router');
 var proyectoRouter = require('./routes/proyectos-router');
 var archivosRouter = require('./routes/archivos-router');
+var planesRouter = require('./routes/planes-router');
 var app = express();
 
 port = 8888
@@ -24,6 +25,7 @@ app.use('/login',loginRouter)
 app.use('/carpetas',carpetaRouter)
 app.use('/proyectos',proyectoRouter)
 app.use('/archivos',archivosRouter)
+app.use('/planes',planesRouter)
 
 app.get('/', function(req, res) {
     res.send('Servidor en Linea')

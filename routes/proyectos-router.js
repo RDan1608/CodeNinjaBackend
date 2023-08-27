@@ -1,24 +1,36 @@
 var express = require('express');
 var router = express.Router();
 var proyecto = require('../models/proyectos');
+var carpeta = require('../models/carpetas');
 
 
 //Crear Nuevo Proyecto
 
-router.post('/', function(req, res) {
-  let u = new proyecto(
-    {
-      nombre: req.body.nombre,
-      descripcion: req.body.descripcion,
-    }
-);
-  u.save().then(result=>{
-    res.send(result);
-    res.end();
-  }).catch(err=>{
-    res.send(err);
-    res.end();
-  });;
+router.post('/:carpetaId', function(req, res) {
+  const carpetaId = req.params.carpetaId;
+
+  let nuevoProyecto = new proyecto({
+    nombre: req.body.nombre,
+    descripcion: req.body.descripcion,
+    carpetaid: req.body.carpetaid,
+  });
+
+  nuevoProyecto.save().then(result => {
+    // Agregar el ID del nuevo proyecto al arreglo de proyectos en la carpeta correspondiente
+    carpeta.findOneAndUpdate(
+      { _id: carpetaId },
+      { $push: { proyectos: result._id } }, // Añadir el ID del nuevo proyecto al arreglo "proyectos"
+      { new: true }
+    )
+      .then(updatedCarpeta => {
+        res.send({ proyecto: result, carpeta: updatedCarpeta });
+      })
+      .catch(err => {
+        res.status(500).send({ message: 'Error al actualizar la carpeta', error: err });
+      });
+  }).catch(err => {
+    res.status(500).send({ message: 'Error al guardar el nuevo proyecto', error: err });
+  });
 });
 
 //Actuliazar Proyecto
@@ -72,20 +84,20 @@ router.get('/', function(req, res) {
 })
 
 // Eliminar Carpeta
-router.delete('/:idCarpeta', async (req, res) => {
+router.delete('/:idProyecto', async (req, res) => {
     try {
-      const idCarpeta = req.params.idCarpeta;
+      const idProyecto = req.params.idProyecto;
   
       // Verifica si el usuario existe
-      const Existecarpeta = await proyecto.findById(idCarpeta);
-      if (!Existeucarpeta) {
+      const Existecarpeta = await proyecto.findById(idProyecto);
+      if (!Existecarpeta) {
         return res.status(404).json({ mensaje: 'proyecto no encontrada' });
       }
   
       // Elimina el usuario
-      await proyecto.findByIdAndDelete(idCarpeta);
-  
+      await proyecto.findByIdAndDelete(idProyecto);
       res.status(200).json({ mensaje: 'proyecto eliminada exitosamente' });
+      
     } catch (error) {
       console.error(error);
       res.status(500).json({ mensaje: 'Error en el servidor' });
